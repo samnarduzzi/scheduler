@@ -15,7 +15,7 @@ const appointments = {
     time: "1pm",
     interview: {
       student: "Lydia Miller-Jones",
-      interviewer:{
+      interviewer: {
         id: 3,
         name: "Sylvia Palmer",
         avatar: "https://i.imgur.com/LpaY82x.png",
@@ -31,7 +31,7 @@ const appointments = {
     time: "3pm",
     interview: {
       student: "Archie Andrews",
-      interviewer:{
+      interviewer: {
         id: 4,
         name: "Cohana Roy",
         avatar: "https://i.imgur.com/FK8V841.jpg",
@@ -46,23 +46,24 @@ const appointments = {
 
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
-  const [days,setDays] = useState([]);
+  const [days, setDays] = useState([]);
 
   useEffect(() => {
     axios.get('api/days')
-    .then(response => {
-      setDays(response.data);
-    })
-  }, [])
+      .then(response => {
+        console.log(response.data);
+        setDays(response.data);
+      });
+  }, []);
 
   const appointmentsList = Object.values(appointments).map(appointment => {
-    return <Appointment 
+    return <Appointment
       key={appointment.id}
       {...appointment}
-    />
-  })
+    />;
+  });
 
-  appointmentsList.push(<Appointment key="last" time="5pm" />)
+  appointmentsList.push(<Appointment key="last" time="5pm" />);
 
   return (
     <main className="layout">
