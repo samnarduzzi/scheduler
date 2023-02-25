@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 import "components/Application.scss";
 
 export default function Application(props) {
@@ -32,11 +32,17 @@ export default function Application(props) {
 
   const dailyAppointment = getAppointmentsForDay(state, state.day);
 
-  const appointmentsList = dailyAppointment.map(appointment => {
-    return <Appointment
-      key={appointment.id}
-      {...appointment}
-    />;
+  const appointmentsList = dailyAppointment.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+      />
+    );
   });
 
   appointmentsList.push(<Appointment key="last" time="5pm" />);
