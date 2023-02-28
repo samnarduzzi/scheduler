@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import "components/Application.scss";
 
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   });
 
 
@@ -30,9 +31,28 @@ export default function Application(props) {
     });
   }, []);
 
-  const dailyAppointment = getAppointmentsForDay(state, state.day);
+  
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    
+    return axios.put(`/api/appointments/${id}`, { interview })
+    .then((response) => {
+      setState({...state, appointments})
+    })
+  }
+  
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day)
 
-  const appointmentsList = dailyAppointment.map((appointment) => {
+  const appointmentsList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
     return (
@@ -41,6 +61,8 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
