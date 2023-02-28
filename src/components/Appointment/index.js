@@ -14,6 +14,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const CONFIRM = "CONFIRM";
 const DELETING = "DELETING";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
 
@@ -44,6 +45,10 @@ export default function Appointment(props) {
       });
   }
 
+  function onEdit() {
+    transition(EDIT);
+  }
+
 
   return (
     <article className="appointment">
@@ -60,6 +65,7 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={onDelete}
+          onEdit={onEdit}
         />
       )}
       {mode === CREATE && (
@@ -85,6 +91,15 @@ export default function Appointment(props) {
           onConfirm={deleteAppointment}
           onCancel={back}
         />
+      )}
+      {mode === EDIT && (
+      <Form  
+        student={props.interview.student}
+        interviewer={props.interview.interviewer.id}
+        interviewers={props.interviewers}
+        onSave={save}
+        onCancel={back}
+      />
       )}
     </article>
   );
