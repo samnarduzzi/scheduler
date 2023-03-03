@@ -34,6 +34,10 @@ npm run storybook
 npm run cypress
 ```
 
+## GIF
+
+![Scheduler demo](https://github.com/samnarduzzi/scheduler/blob/master/public/docs/scheduler.gif?raw=true)
+
 ## Dependencies
 
 - axios
