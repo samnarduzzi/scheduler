@@ -45,7 +45,7 @@ export default function Appointment(props) {
     transition(DELETING, true);
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch(error => transition(ERROR_DELETE, true))
+      .catch(error => transition(ERROR_DELETE, true));
   }
 
   function onEdit() {
@@ -96,22 +96,22 @@ export default function Appointment(props) {
         />
       )}
       {mode === EDIT && (
-      <Form  
-        student={props.interview.student}
-        interviewer={props.interview.interviewer.id}
-        interviewers={props.interviewers}
-        onSave={save}
-        onCancel={back}
-      />
+        <Form
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+          interviewers={props.interviewers}
+          onSave={save}
+          onCancel={back}
+        />
       )}
       {mode === ERROR_SAVE && (
-        <Error 
+        <Error
           message="Could not save appointment."
           onClose={back}
         />
       )}
       {mode === ERROR_DELETE && (
-        <Error 
+        <Error
           message="Could not cancel appointment."
           onClose={back}
         />

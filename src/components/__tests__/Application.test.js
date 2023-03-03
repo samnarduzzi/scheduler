@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText, getByTestId } from "@testing-library/react";
+import { render, cleanup, waitForElement, fireEvent, getByText, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText, getByTestId } from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -131,7 +131,7 @@ describe("Application", () => {
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
 
     fireEvent.click(getByAltText(appointment, "Delete"));
-    expect(getByText(appointment, /Are you sure you would like to delete/i)).toBeInTheDocument()
+    expect(getByText(appointment, /Are you sure you would like to delete/i)).toBeInTheDocument();
 
 
     fireEvent.click(getByText(appointment, "Confirm"));
